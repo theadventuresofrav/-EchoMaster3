@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ARDMS SPI Examination Review</title>
+    
+    <!-- 1. Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- 3. Tailwind CSS Configuration -->
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'primary-black': '#0a0a0a',
+              'surface-dark': '#141416',
+              'deep-purple': '#1a0a2e',
+              'rich-gold': '#d4af37',
+              'accent-gold': '#ffd700',
+              'pure-white': '#ffffff',
+              'silver': '#c0c0c0',
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+          }
+        }
+      }
+    </script>
+    
+    <!-- 4. Base Animations & Styles -->
+    <style>
+      :root {
+        --font-sans: 'Inter', sans-serif;
+        --font-serif: 'Playfair Display', serif;
+        /* --- STATIC GOLD THEME VARS for Badging --- */
+        --color-gold-rich: #D4AF37;
+        --color-gold-dark: #B8860B;
+        --color-gold-light: #FFD700;
+        --color-gold-glow: rgba(212, 175, 55, 0.3);
+      }
+      body {
+        font-family: var(--font-sans);
+        background-color: var(--color-bg-base);
+        background-image: linear-gradient(135deg, var(--color-bg-base) 0%, var(--color-bg-gradient-end) 100%);
+        color: var(--color-text-base);
+        transition: background 0.5s ease-in-out;
+        min-height: 100vh;
+      }
+
+      .font-sans { font-family: var(--font-sans); }
+      .font-serif { font-family: var(--font-serif); }
+
+      /* --- THEME DEFINITIONS (REFINED FOR CONTRAST) --- */
+      .theme-gold { /* Celestial Gold */
+        --color-primary-accent: #D4AF37;
+        --color-primary-accent-dark: #B8860B;
+        --color-primary-accent-light: #FFD700;
+        --color-primary-accent-glow: rgba(212, 175, 55, 0.3);
+        --color-bg-base: #050505;
+        --color-bg-gradient-end: #1c1941;
+        --color-bg-surface: #111113;
+        --color-bg-surface-light: #1e1b2f;
+        --color-text-base: #f3f4f6;
+        --color-text-muted: #a1a1aa;
+        --color-text-heading: #ffffff;
+        --color-border-base: #3a334f;
+        --color-border-hover: #5a5178;
+      }
+      .theme-cosmic { /* Cosmic Cyan */
+        --color-primary-accent: #07c8e4;
+        --color-primary-accent-dark: #06b6d4;
+        --color-primary-accent-light: #28e0fa;
+        --color-primary-accent-glow: rgba(7, 200, 228, 0.3);
+        --color-bg-base: #020610;
+        --color-bg-gradient-end: #0a2d38;
+        --color-bg-surface: #0c1827;
+        --color-bg-surface-light: #12243b;
+        --color-text-base: #eaf6fe;
+        --color-text-muted: #94a3b8;
+        --color-text-heading: #ffffff;
+        --color-border-base: #1b3a5c;
+        --color-border-hover: #255080;
+      }
+      .theme-crimson { /* Crimson Ember */
+        --color-primary-accent: #f44336;
+        --color-primary-accent-dark: #e53935;
+        --color-primary-accent-light: #ef5350;
+        --color-primary-accent-glow: rgba(244, 67, 54, 0.35);
+        --color-bg-base: #100202;
+        --color-bg-gradient-end: #3d0909;
+        --color-bg-surface: #1f0d0d;
+        --color-bg-surface-light: #311515;
+        --color-text-base: #fde8e8;
+        --color-text-muted: #b99d9d;
+        --color-text-heading: #ffffff;
+        --color-border-base: #5c3535;
+        --color-border-hover: #7a4949;
+      }
+      .theme-emerald { /* Emerald Serpent */
+        --color-primary-accent: #10b981;
+        --color-primary-accent-dark: #059669;
+        --color-primary-accent-light: #34d399;
+        --color-primary-accent-glow: rgba(16, 185, 129, 0.3);
+        --color-bg-base: #031411;
+        --color-bg-gradient-end: #0f3d38;
+        --color-bg-surface: #08221c;
+        --color-bg-surface-light: #0d342c;
+        --color-text-base: #ecfdf5;
+        --color-text-muted: #8bbca8;
+        --color-text-heading: #ffffff;
+        --color-border-base: #1e5e54;
+        --color-border-hover: #297c6f;
+      }
+      .theme-sapphire { /* Sapphire Scribe */
+        --color-primary-accent: #3b82f6;
+        --color-primary-accent-dark: #2563eb;
+        --color-primary-accent-light: #60a5fa;
+        --color-primary-accent-glow: rgba(59, 130, 246, 0.3);
+        --color-bg-base: #0a101f;
+        --color-bg-gradient-end: #1a3178;
+        --color-bg-surface: #151e2f;
+        --color-bg-surface-light: #2b364d;
+        --color-text-base: #eef2ff;
+        --color-text-muted: #a0aec0;
+        --color-text-heading: #ffffff;
+        --color-border-base: #3e4c66;
+        --color-border-hover: #536382;
+      }
+      .theme-amethyst { /* Amethyst Oracle */
+        --color-primary-accent: #e040fb;
+        --color-primary-accent-dark: #d500f9;
+        --color-primary-accent-light: #ea80fc;
+        --color-primary-accent-glow: rgba(224, 64, 251, 0.35);
+        --color-bg-base: #15062a;
+        --color-bg-gradient-end: #4a1478;
+        --color-bg-surface: #22153c;
+        --color-bg-surface-light: #311d54;
+        --color-text-base: #fbfaff;
+        --color-text-muted: #c9b7e4;
+        --color-text-heading: #ffffff;
+        --color-border-base: #532d80;
+        --color-border-hover: #6a39a9;
+      }
+      .theme-obsidian { /* Obsidian Shadow */
+        --color-primary-accent: #4fc3f7;
+        --color-primary-accent-dark: #29b6f6;
+        --color-primary-accent-light: #81d4fa;
+        --color-primary-accent-glow: rgba(79, 195, 247, 0.25);
+        --color-bg-base: #01040f;
+        --color-bg-gradient-end: #1a2330;
+        --color-bg-surface: #0c1322;
+        --color-bg-surface-light: #192334;
+        --color-text-base: #f1f5f9;
+        --color-text-muted: #94a3b8;
+        --color-text-heading: #ffffff;
+        --color-border-base: #3c4a60;
+        --color-border-hover: #6e7f99;
+      }
+      .theme-sunstone { /* Sunstone Ritual */
+        --color-primary-accent: #fb923c;
+        --color-primary-accent-dark: #f97316;
+        --color-primary-accent-light: #fdba74;
+        --color-primary-accent-glow: rgba(251, 146, 60, 0.35);
+        --color-bg-base: #281203;
+        --color-bg-gradient-end: #5c200b;
+        --color-bg-surface: #3a1c07;
+        --color-bg-surface-light: #52280d;
+        --color-text-base: #fff7ed;
+        --color-text-muted: #fcd5b4;
+        --color-text-heading: #ffffff;
+        --color-border-base: #8c4217;
+        --color-border-hover: #a55129;
+      }
+
+      /* Base animation */
+      @keyframes section-enter {
+          from { opacity: 0; transform: translateY(30px) scale(0.98); }
+          to { opacity: 1; transform: translateY(0) scale(1); }
+      }
+      .animate-section-enter { animation: section-enter 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards; }
+      
+      @keyframes section-exit {
+          from { opacity: 1; transform: translateY(0) scale(1); }
+          to { opacity: 0; transform: translateY(-20px) scale(0.98); }
+      }
+      .animate-section-exit { animation: section-exit 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards; }
+
+      /* Flashcard flip */
+      .flashcard-container { perspective: 1000px; }
+      .flashcard { transform-style: preserve-3d; transition: transform 0.6s; }
+      .flashcard.is-flipped { transform: rotateY(180deg); }
+      .flashcard-front, .flashcard-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+      .flashcard-back { transform: rotateY(180deg); }
+
+      /* Game Animations */
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+        20%, 40%, 60%, 80% { transform: translateX(4px); }
+      }
+      .animate-shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+
+      @keyframes pop-in {
+        0% { transform: scale(0.5); opacity: 0; }
+        70% { transform: scale(1.1); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      .animate-pop-in { animation: pop-in 0.4s ease-out forwards; }
+
+      /* Custom animations for demos */
+      @keyframes transducer-vibrate { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(1px); } }
+      @keyframes particle-oscillation { 0%, 100% { transform: translateX(-5px); } 50% { transform: translateX(5px); } }
+      @keyframes compression-wave-propagate { from { transform: translateX(0px) scaleX(0.5); opacity: 1; } to { transform: translateX(300px) scaleX(1); opacity: 0; } }
+      @keyframes mirror-path-animation {
+        0% { top: 0; left: 50%; opacity: 1; }
+        25% { top: var(--object-pos-y); left: var(--object-pos-x); opacity: 1; }
+        50% { top: var(--reflector-pos); left: var(--object-pos-x); opacity: 1; }
+        75% { top: calc(var(--reflector-pos) + (var(--reflector-pos) - var(--object-pos-y))); left: var(--object-pos-x); opacity: 0; }
+        100% { top: 0; left: 50%; opacity: 0; }
+      }
+      @keyframes pw-doppler-flow { from { transform: translateX(-100%); } to { transform: translateX(200%); } }
+      @keyframes pw-pulse-travel {
+        0% { top: 0; opacity: 1; }
+        50% { top: 60%; opacity: 1; }
+        51% { opacity: 0; }
+        100% { opacity: 0; }
+      }
+      @keyframes m-mode-trace-draw { from { transform: translateX(0%); } to { transform: translateX(-50%); } }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.29.1"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
