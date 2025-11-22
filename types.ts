@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 
 export interface SubTopic {
@@ -44,7 +42,7 @@ export interface ProgressContextType {
 }
 
 // FIX: Add missing Theme, ThemeOption, and SettingsContextType types
-export type Theme = 'theme-gold' | 'theme-cosmic' | 'theme-crimson' | 'theme-emerald' | 'theme-sapphire' | 'theme-amethyst' | 'theme-obsidian' | 'theme-sunstone';
+export type Theme = 'theme-gold' | 'theme-cosmic' | 'theme-crimson' | 'theme-emerald' | 'theme-sapphire' | 'theme-amethyst' | 'theme-obsidian' | 'theme-sunstone' | 'theme-upload';
 
 export interface ThemeOption {
   value: Theme;

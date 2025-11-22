@@ -23,12 +23,14 @@ function App() {
   const selectedTopic = ALL_TOPICS.find(t => t.id === selectedTopicId) as SubTopic;
 
   const handleSelectTopic = (topicId: string) => {
+    window.scrollTo(0, 0);
     setSelectedTopicId(topicId);
     setCurrentView('topics'); // Ensure view is set to topics
     setIsMobileSidebarOpen(false); // Close sidebar on topic selection
   };
 
   const handleNavigate = (view: 'topics' | 'numerology' | 'games' | 'demos' | 'plans') => {
+    window.scrollTo(0, 0);
     setCurrentView(view);
     // If navigating to topics and no topic is selected, select the first one.
     if (view === 'topics' && !selectedTopicId) {
@@ -75,7 +77,7 @@ function App() {
           );
       }
 
-      return <ContentDisplay topic={selectedTopic} />;
+      return <ContentDisplay topic={selectedTopic} onSelectTopic={handleSelectTopic} />;
   };
 
   return (

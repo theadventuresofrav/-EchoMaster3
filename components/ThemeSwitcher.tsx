@@ -11,6 +11,7 @@ const THEME_OPTIONS: ThemeOption[] = [
   { value: 'theme-amethyst', label: 'Amethyst Oracle' },
   { value: 'theme-obsidian', label: 'Obsidian Shadow' },
   { value: 'theme-sunstone', label: 'Sunstone Ritual' },
+  { value: 'theme-upload', label: 'Operator Console' },
 ];
 
 const ThemeSwitcher: React.FC = () => {
@@ -46,7 +47,7 @@ const ThemeSwitcher: React.FC = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-[var(--color-bg-surface)] bg-opacity-80 backdrop-blur-md border border-[var(--color-border-base)] rounded-lg shadow-2xl z-50">
+        <div className="absolute right-0 mt-2 w-48 bg-[var(--color-bg-surface)] bg-opacity-90 backdrop-blur-md border border-[var(--color-border-base)] rounded-lg shadow-2xl z-50 max-h-64 overflow-y-auto">
           <ul className="p-1">
             {THEME_OPTIONS.map((option) => (
               <li key={option.value}>

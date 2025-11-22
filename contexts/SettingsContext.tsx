@@ -1,8 +1,7 @@
-
 import React, { createContext, useState, useContext, useEffect, useMemo } from 'react';
 import type { Theme, SettingsContextType } from '../types';
 
-const THEMES: Theme[] = ['theme-gold', 'theme-cosmic', 'theme-crimson', 'theme-emerald', 'theme-sapphire', 'theme-amethyst', 'theme-obsidian', 'theme-sunstone'];
+const THEMES: Theme[] = ['theme-gold', 'theme-cosmic', 'theme-crimson', 'theme-emerald', 'theme-sapphire', 'theme-amethyst', 'theme-obsidian', 'theme-sunstone', 'theme-upload'];
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 

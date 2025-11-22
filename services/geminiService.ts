@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type, Chat, Modality } from "@google/genai";
 import type { QuizQuestion, Difficulty, ChatMessage } from '../types';
 
@@ -90,6 +89,10 @@ const getGeminiService = () => {
       generateSpeech: async (text: string): Promise<string> => {
         console.warn("API_KEY not found. Speech generation is disabled.");
         return '';
+      },
+      guessDrawing: async (imageBase64: string, targetWord: string): Promise<string> => {
+          console.warn("API_KEY not found. Guessing is disabled.");
+          return "I can't see the drawing without an API Key, but it looks great!";
       }
     };
   }
@@ -153,7 +156,35 @@ const getGeminiService = () => {
     }
   };
 
-  return { generateQuiz, generateSpeech };
+  const guessDrawing = async (imageBase64: string, targetWord: string): Promise<string> => {
+      try {
+          // Remove header if present
+          const base64Data = imageBase64.replace(/^data:image\/(png|jpeg|jpg);base64,/, '');
+          
+          const response = await ai.models.generateContent({
+              model: 'gemini-2.5-flash',
+              contents: {
+                  parts: [
+                      {
+                          inlineData: {
+                              mimeType: 'image/png',
+                              data: base64Data
+                          }
+                      },
+                      {
+                          text: `I am playing Pictionary. The secret word is "${targetWord}". Does this drawing look like "${targetWord}"? If it is clearly recognizable as "${targetWord}", start your response with "CORRECT!". If it is close but missing details, give a helpful hint. If it looks like something else, describe what you see. Keep it brief.`
+                      }
+                  ]
+              }
+          });
+          return response.text || "I couldn't make out the drawing.";
+      } catch (error) {
+          console.error("Error guessing drawing:", error);
+          return "Error analyzing the image.";
+      }
+  };
+
+  return { generateQuiz, generateSpeech, guessDrawing };
 };
 
 export const geminiService = {

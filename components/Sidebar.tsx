@@ -1,7 +1,8 @@
+
 import React, { useState, useMemo } from 'react';
 import type { Module } from '../types';
 import { useProgress } from '../contexts/ProgressContext';
-import { CheckCircleIcon, SearchIcon, GameControllerIcon, EyeIcon, BookOpenIcon } from './icons';
+import { CheckCircleIcon, SearchIcon, GameControllerIcon, EyeIcon, BookOpenIcon, StarIcon } from './icons';
 
 interface SidebarProps {
   modules: Module[];
@@ -52,7 +53,7 @@ const Sidebar: React.FC<SidebarProps> = ({ modules, selectedTopicId, onSelectTop
 
   return (
     <aside className={`fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-surface-dark/70 backdrop-blur-lg border-r border-rich-gold/30 p-4 flex flex-col overflow-y-auto z-40 transition-transform duration-300 ease-in-out md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-      <div className="relative mb-4">
+      <div className="relative mb-6">
         <input
           type="text"
           placeholder="Search topics..."
@@ -65,7 +66,10 @@ const Sidebar: React.FC<SidebarProps> = ({ modules, selectedTopicId, onSelectTop
 
       <nav className="flex-grow overflow-y-auto">
         {/* Special Sections */}
-        <div className="mb-4 space-y-1">
+        <div className="mb-6 space-y-1">
+            <div className="px-2 mb-2 text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider opacity-70">
+                Study Tools
+            </div>
             <button
                 onClick={() => onNavigate('plans')}
                 className={`w-full flex items-center space-x-3 p-2 rounded-md cursor-pointer transition-colors border-l-2 ${
@@ -101,10 +105,27 @@ const Sidebar: React.FC<SidebarProps> = ({ modules, selectedTopicId, onSelectTop
                 <EyeIcon className="w-5 h-5 flex-shrink-0" />
                 <span className="text-sm tracking-wide">Visual Lab</span>
             </button>
-             <div className="h-px bg-rich-gold/20 my-2 mx-2"></div>
+
+             <button
+                onClick={() => onNavigate('numerology')}
+                className={`w-full flex items-center space-x-3 p-2 rounded-md cursor-pointer transition-colors border-l-2 ${
+                currentView === 'numerology'
+                    ? 'border-[var(--color-primary-accent)] bg-[var(--color-primary-accent)]/10 text-[var(--color-primary-accent)] font-bold'
+                    : 'border-transparent text-silver hover:bg-primary-black/40 hover:text-pure-white hover:border-[var(--color-primary-accent)]/50'
+                }`}
+            >
+                <StarIcon className="w-5 h-5 flex-shrink-0" />
+                <span className="text-sm tracking-wide">Premium Guide</span>
+            </button>
         </div>
 
-        <div className="flex flex-col space-y-1">
+        {/* Modules */}
+         <div className="px-2 mb-2 text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider opacity-70">
+            Course Curriculum
+         </div>
+         <div className="h-px bg-rich-gold/10 mx-2 mb-3"></div>
+
+        <div className="flex flex-col space-y-1 pb-8">
             {filteredModules.map((module) => (
             <details key={module.id} open={searchTerm ? true : module.id === openModuleId} className="group">
                 <summary className="flex items-center justify-between p-2 rounded-md cursor-pointer hover:bg-primary-black/40 list-none transition-colors select-none">

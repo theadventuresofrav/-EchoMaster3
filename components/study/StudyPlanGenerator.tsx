@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import { calculateProfile, generateLessonPlan, UserProfile, NumerologyProfile, LessonPlan, LearningStyle, Subject } from '../../utils/studyPlanEngine';
 import { BookOpenIcon } from '../icons';
 
@@ -10,18 +11,49 @@ const StudyPlanGenerator: React.FC = () => {
         learningStyle: 'Visual',
         interests: ''
     });
-    const [subject, setSubject] = useState<Subject>('Science');
+    const [subject, setSubject] = useState<Subject>('SPI: Physics');
     
     const [profile, setProfile] = useState<NumerologyProfile | null>(null);
     const [plan, setPlan] = useState<LessonPlan | null>(null);
+    
+    // Loading State
+    const [isLoading, setIsLoading] = useState(false);
+    const [loadingMessage, setLoadingMessage] = useState('');
+    const [loadingProgress, setLoadingProgress] = useState(0);
 
-    const handleGenerate = (e: React.FormEvent) => {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [step]);
+
+    const handleGenerate = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsLoading(true);
+        setLoadingProgress(0);
+
+        // Simulation sequence
+        const sequence = [
+            { msg: "Analyzing Numerology Profile...", progress: 25, delay: 800 },
+            { msg: "Calculating Learning Vectors...", progress: 50, delay: 800 },
+            { msg: "Consulting Astrological Charts...", progress: 75, delay: 800 },
+            { msg: "Synthesizing Personalized Curriculum...", progress: 90, delay: 800 },
+        ];
+
+        for (const step of sequence) {
+            setLoadingMessage(step.msg);
+            setLoadingProgress(step.progress);
+            await new Promise(r => setTimeout(r, step.delay));
+        }
+
         const numProfile = calculateProfile(formData);
         const lessonPlan = generateLessonPlan(formData, numProfile, subject);
         
         setProfile(numProfile);
         setPlan(lessonPlan);
+        
+        setLoadingProgress(100);
+        await new Promise(r => setTimeout(r, 400)); // Final pause at 100%
+
+        setIsLoading(false);
         setStep('results');
     };
 
@@ -29,7 +61,39 @@ const StudyPlanGenerator: React.FC = () => {
         setStep('intake');
         setProfile(null);
         setPlan(null);
+        setIsLoading(false);
     };
+
+    // Loading View
+    if (isLoading) {
+        return (
+            <div className="w-full max-w-3xl mx-auto p-6 min-h-[60vh] flex flex-col items-center justify-center animate-section-enter">
+                <div className="w-full max-w-md bg-[var(--color-bg-surface)] border border-[var(--color-border-base)] rounded-2xl p-8 shadow-2xl flex flex-col items-center text-center">
+                    <div className="w-16 h-16 mb-6 relative">
+                        <div className="absolute inset-0 rounded-full border-4 border-[var(--color-bg-surface-light)]"></div>
+                        <div 
+                            className="absolute inset-0 rounded-full border-4 border-[var(--color-primary-accent)] border-t-transparent animate-spin"
+                        ></div>
+                        <BookOpenIcon className="absolute inset-0 m-auto w-6 h-6 text-[var(--color-primary-accent)] animate-pulse" />
+                    </div>
+                    
+                    <h3 className="text-xl font-bold text-[var(--color-text-heading)] mb-2">
+                        AI Engine Active
+                    </h3>
+                    <p className="text-[var(--color-text-muted)] mb-6 min-h-[1.5rem]">
+                        {loadingMessage}
+                    </p>
+
+                    <div className="w-full h-2 bg-[var(--color-bg-surface-light)] rounded-full overflow-hidden">
+                        <div 
+                            className="h-full bg-[var(--color-primary-accent)] transition-all duration-500 ease-out"
+                            style={{ width: `${loadingProgress}%` }}
+                        ></div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     if (step === 'intake') {
         return (
@@ -90,11 +154,12 @@ const StudyPlanGenerator: React.FC = () => {
                                 onChange={e => setSubject(e.target.value as Subject)}
                                 className="w-full bg-[var(--color-bg-surface-light)] border border-[var(--color-border-base)] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--color-primary-accent)]"
                             >
-                                <option value="Science">Science</option>
-                                <option value="Math">Math</option>
-                                <option value="History">History</option>
-                                <option value="English">English / Literature</option>
-                                <option value="Philosophy">Philosophy</option>
+                                <option value="SPI: Physics">SPI: Physics</option>
+                                <option value="SPI: Hemodynamics">SPI: Hemodynamics</option>
+                                <option value="SPI: Artifacts">SPI: Artifacts</option>
+                                <option value="Vascular Technology">Vascular Technology</option>
+                                <option value="Abdominal Sonography">Abdominal Sonography</option>
+                                <option value="Ob/Gyn">Ob/Gyn</option>
                             </select>
                         </div>
                     </div>
@@ -106,15 +171,16 @@ const StudyPlanGenerator: React.FC = () => {
                             value={formData.interests}
                             onChange={e => setFormData({...formData, interests: e.target.value})}
                             className="w-full bg-[var(--color-bg-surface-light)] border border-[var(--color-border-base)] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[var(--color-primary-accent)]"
-                            placeholder="e.g. Space, Ancient Rome, Poetry, Coding..."
+                            placeholder="e.g. Hemodynamics, Artifacts, Board Prep..."
                         />
                     </div>
 
                     <button 
                         type="submit"
-                        className="w-full bg-[var(--color-primary-accent)] text-black font-bold py-4 rounded-xl hover:scale-[1.02] transition-transform shadow-[0_0_20px_-5px_var(--color-primary-accent-glow)]"
+                        className="w-full bg-[var(--color-primary-accent)] text-black font-bold py-4 rounded-xl hover:scale-[1.02] transition-transform shadow-[0_0_20px_-5px_var(--color-primary-accent-glow)] flex items-center justify-center gap-2"
                     >
-                        Generate Study Plan
+                       <BookOpenIcon className="w-5 h-5" />
+                       Generate Study Plan
                     </button>
                 </form>
             </div>

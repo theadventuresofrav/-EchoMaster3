@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import type { SubTopic, FlashcardData, QuizQuestion, Difficulty } from '../types';
-import { FLASHCARDS } from '../constants';
+import { FLASHCARDS, MODULES } from '../constants';
 import GeminiTutor from './GeminiTutor';
 import Flashcard from './Flashcard';
 import { geminiService } from '../services/geminiService';
@@ -107,12 +107,25 @@ const Quiz: React.FC<QuizProps> = ({ topicTitle }) => {
 
       case 'loading':
         return (
-          <div className="flex flex-col items-center justify-center p-8 bg-[var(--color-bg-surface-light)] rounded-lg">
-            <svg className="animate-spin h-8 w-8 text-[var(--color-primary-accent)] mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <p className="text-[var(--color-text-muted)]">Generating your {selectedDifficulty} quiz...</p>
+          <div className="flex flex-col items-center justify-center p-12 bg-[var(--color-bg-surface-light)]/50 border border-[var(--color-border-base)] rounded-xl shadow-inner">
+            <div className="w-12 h-12 mb-4 relative">
+                <div className="absolute inset-0 border-4 border-[var(--color-bg-surface)] rounded-full"></div>
+                <div className="absolute inset-0 border-4 border-[var(--color-primary-accent)] border-t-transparent rounded-full animate-spin"></div>
+            </div>
+            <p className="text-[var(--color-text-heading)] font-bold mb-1">Initializing Assessment</p>
+            <p className="text-[var(--color-text-muted)] text-sm mb-4">AI is generating your {selectedDifficulty.toLowerCase()} quiz...</p>
+            
+            {/* Simulated Progress Bar */}
+            <div className="w-64 h-1.5 bg-[var(--color-bg-surface)] rounded-full overflow-hidden">
+                 <div className="h-full bg-[var(--color-primary-accent)] animate-[loading-bar_2s_ease-in-out_infinite] w-full origin-left"></div>
+            </div>
+            <style>{`
+                @keyframes loading-bar {
+                    0% { transform: scaleX(0); }
+                    50% { transform: scaleX(0.7); }
+                    100% { transform: scaleX(1); }
+                }
+            `}</style>
           </div>
         );
 
@@ -213,11 +226,12 @@ const Quiz: React.FC<QuizProps> = ({ topicTitle }) => {
 // --- Main ContentDisplay Component ---
 interface ContentDisplayProps {
   topic: SubTopic;
+  onSelectTopic: (topicId: string) => void;
 }
 
 type NarrationState = 'idle' | 'loading' | 'playing' | 'error';
 
-const ContentDisplay: React.FC<ContentDisplayProps> = ({ topic }) => {
+const ContentDisplay: React.FC<ContentDisplayProps> = ({ topic, onSelectTopic }) => {
   const DemoComponent = topic.demo;
   const relatedFlashcards = FLASHCARDS[topic.id] || [];
   const { isTopicCompleted, toggleTopicCompletion } = useProgress();
@@ -225,6 +239,12 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ topic }) => {
   const [narrationState, setNarrationState] = useState<NarrationState>('idle');
   const audioContextRef = useRef<AudioContext | null>(null);
   const audioSourceRef = useRef<AudioBufferSourceNode | null>(null);
+
+  // Calculate Prev/Next Topics
+  const allTopics = React.useMemo(() => MODULES.flatMap(m => m.topics), []);
+  const currentIndex = allTopics.findIndex(t => t.id === topic.id);
+  const prevTopic = currentIndex > 0 ? allTopics[currentIndex - 1] : null;
+  const nextTopic = currentIndex < allTopics.length - 1 ? allTopics[currentIndex + 1] : null;
 
   // Scroll to top and stop audio whenever the topic changes
   useEffect(() => {
@@ -347,7 +367,7 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ topic }) => {
           </section>
         )}
 
-        <section className="border-t border-[var(--color-border-base)] pt-6 text-center animate-section-enter" style={{animationDelay: '600ms'}}>
+        <section className="border-t border-[var(--color-border-base)] pt-6 text-center animate-section-enter space-y-6" style={{animationDelay: '600ms'}}>
             <button
                 onClick={() => toggleTopicCompletion(topic.id)}
                 className={`px-6 py-3 rounded-full font-semibold transition-all flex items-center justify-center gap-2 mx-auto ${
@@ -359,6 +379,39 @@ const ContentDisplay: React.FC<ContentDisplayProps> = ({ topic }) => {
                 <CheckCircleIcon className="w-5 h-5"/>
                 <span>{isTopicCompleted(topic.id) ? 'Topic Completed!' : 'Mark as Complete'}</span>
             </button>
+
+             {/* Navigation Buttons */}
+            <div className="flex justify-between items-center pt-4 border-t border-[var(--color-border-base)]/30">
+                 {prevTopic ? (
+                    <button
+                        onClick={() => onSelectTopic(prevTopic.id)}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg text-[var(--color-text-muted)] hover:text-white hover:bg-[var(--color-bg-surface-light)] transition-colors"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                        </svg>
+                        <div className="text-left">
+                             <div className="text-xs opacity-50">Previous</div>
+                             <div className="text-sm font-medium">{prevTopic.title}</div>
+                        </div>
+                    </button>
+                 ) : (<div></div>)}
+                 
+                 {nextTopic && (
+                    <button
+                        onClick={() => onSelectTopic(nextTopic.id)}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg text-[var(--color-text-muted)] hover:text-white hover:bg-[var(--color-bg-surface-light)] transition-colors"
+                    >
+                        <div className="text-right">
+                             <div className="text-xs opacity-50">Next</div>
+                             <div className="text-sm font-medium">{nextTopic.title}</div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </button>
+                 )}
+            </div>
         </section>
       </div>
     </main>

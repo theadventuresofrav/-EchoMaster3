@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { EyeIcon, WavesIcon, TransducerIcon, DopplerIcon, ArtifactsIcon, InstrumentationIcon } from './icons';
 import LongitudinalWaveVisual from './demos/spi/LongitudinalWaveVisual';
 import TransducerAnatomyVisual from './demos/spi/TransducerAnatomyVisual';
@@ -79,6 +79,10 @@ const DEMOS: VisualDemo[] = [
 
 const DemosDashboard: React.FC = () => {
     const [activeDemoId, setActiveDemoId] = useState<string | null>(null);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [activeDemoId]);
 
     const activeDemo = DEMOS.find(d => d.id === activeDemoId);
 

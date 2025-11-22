@@ -2,7 +2,8 @@
 export type LearningStyle = 'Visual' | 'Auditory' | 'Reading/Writing' | 'Kinesthetic';
 export type ZodiacSign = 'Aries' | 'Taurus' | 'Gemini' | 'Cancer' | 'Leo' | 'Virgo' | 'Libra' | 'Scorpio' | 'Sagittarius' | 'Capricorn' | 'Aquarius' | 'Pisces';
 export type ChineseZodiac = 'Rat' | 'Ox' | 'Tiger' | 'Rabbit' | 'Dragon' | 'Snake' | 'Horse' | 'Goat' | 'Monkey' | 'Rooster' | 'Dog' | 'Pig';
-export type Subject = 'Science' | 'Math' | 'History' | 'English' | 'Philosophy';
+
+export type Subject = 'SPI: Physics' | 'SPI: Hemodynamics' | 'SPI: Artifacts' | 'Vascular Technology' | 'Abdominal Sonography' | 'Ob/Gyn';
 
 export interface UserProfile {
     name: string;
@@ -32,7 +33,6 @@ export interface LessonPlan {
 
 // --- GG33 Engine: Numerology & Astrology Calculations ---
 
-// Pythagorean Letter Mapping
 const LETTER_MAP: Record<string, number> = {
     a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9,
     j: 1, k: 2, l: 3, m: 4, n: 5, o: 6, p: 7, q: 8, r: 9,
@@ -59,7 +59,6 @@ function calculateNameNumber(name: string, onlyVowels: boolean = false): number 
 
 function calculateLifePath(dob: string): number {
     const [year, month, day] = dob.split('-').map(Number);
-    // Reduce Year, Month, Day separately then sum
     const rYear = reduceNumber(year);
     const rMonth = reduceNumber(month);
     const rDay = reduceNumber(day);
@@ -129,38 +128,44 @@ const LEARNING_STYLE_FORMAT: Record<LearningStyle, { format: string, tools: stri
     'Kinesthetic': { format: "Tactile/Active", tools: ["Models", "Experiments", "Roleplay", "Field Work"] }
 };
 
-// --- Lesson Content Bank (Mock Templates) ---
+// --- Lesson Content Bank (Ultrasound Focused) ---
 
 const TEMPLATES: Record<Subject, Record<LearningStyle, string[]>> = {
-    Science: {
-        Visual: ["Create a detailed diagram of the system", "Watch a documentary and map the key events"],
-        Auditory: ["Listen to a science podcast and debate the findings", "Explain the process verbally to a peer"],
-        'Reading/Writing': ["Read the case study and write a summary report", "Create a glossary of key terms"],
-        Kinesthetic: ["Build a physical model of the concept", "Conduct an experiment and log real-time data"]
+    'SPI: Physics': {
+        Visual: ["Draw the sound beam shape including near/far zones", "Create a diagram of transducer components"],
+        Auditory: ["Listen to a lecture on the piezoelectric effect", "Explain the range equation out loud"],
+        'Reading/Writing': ["Write definitions for key wave parameters", "Create a cheat sheet for resolution acronyms (LARRD, LATA)"],
+        Kinesthetic: ["Use a slinky to demonstrate longitudinal waves", "Manipulate TGC controls on a machine (or simulator)"]
     },
-    Math: {
-        Visual: ["Draw geometric representations of the problem", "Use color-coded graphs to analyze data"],
-        Auditory: ["Talk through the logic of the solution step-by-step", "Use rhythm or song to memorize formulas"],
-        'Reading/Writing': ["Write out the proof in sentence form", "Create a 'how-to' guide for this problem type"],
-        Kinesthetic: ["Use manipulatives to solve the equation", "Walk through the geometry in a physical space"]
+    'SPI: Hemodynamics': {
+        Visual: ["Map out the circulatory system flow", "Draw laminar vs turbulent flow profiles"],
+        Auditory: ["Discuss the Doppler effect pitch changes", "Listen to different Doppler audio signals"],
+        'Reading/Writing': ["Write a summary of Bernoulli's Principle", "List the factors affecting resistance"],
+        Kinesthetic: ["Use a water hose analogy to feel pressure/resistance", "Practice adjusting Doppler angle on a phantom"]
     },
-    History: {
-        Visual: ["Create a timeline with drawings of key events", "Analyze historical maps and art"],
-        Auditory: ["Listen to speeches from the era", "Participate in a historical debate"],
-        'Reading/Writing': ["Write a diary entry from a historical figure's perspective", "Read primary source documents"],
-        Kinesthetic: ["Re-enact a historical event", "Build a diorama of the historical setting"]
+    'SPI: Artifacts': {
+        Visual: ["Identify artifacts in sample images", "Draw the path of sound for mirror image"],
+        Auditory: ["Describe how reverberation is created", "Quiz a partner on artifact causes"],
+        'Reading/Writing': ["Catalog artifacts by their cause (attenuation vs propagation)", "Write case studies involving artifacts"],
+        Kinesthetic: ["Create shadow artifacts using different materials", "Adjust gain to create/eliminate noise"]
     },
-    English: {
-        Visual: ["Storyboard a scene from the book", "Create a mind map of character relationships"],
-        Auditory: ["Perform a dramatic reading of the text", "Discuss themes in a Socratic seminar"],
-        'Reading/Writing': ["Write a literary analysis essay", "Journal about personal connections to the text"],
-        Kinesthetic: ["Act out a scene", "Arrange plot points physically on a wall"]
+    'Vascular Technology': {
+        Visual: ["Trace the Circle of Willis", "Color-code venous vs arterial flow diagrams"],
+        Auditory: ["Listen to triphasic vs monophasic waveforms", "Verbalize the path of blood from heart to toe"],
+        'Reading/Writing': ["Write a protocol for a DVT study", "Summarize diagnostic criteria for stenosis"],
+        Kinesthetic: ["Practice probe positioning for carotid artery", "Simulate augmentation techniques"]
     },
-    Philosophy: {
-        Visual: ["Map out the logical argument flow visually", "Create symbols for key philosophical concepts"],
-        Auditory: ["Debate the ethical dilemma", "Listen to lectures by modern philosophers"],
-        'Reading/Writing': ["Write a manifesto based on the theory", "Critique a philosophical text"],
-        Kinesthetic: ["Roleplay a thought experiment", "Meditation/reflection exercises"]
+    'Abdominal Sonography': {
+        Visual: ["Draw the segmental anatomy of the liver", "Label a cross-section of the kidney"],
+        Auditory: ["Listen to a case review of gallstones", "Describe the sonographic appearance of the pancreas"],
+        'Reading/Writing': ["Write a report for a normal abdomen scan", "Create flashcards for organ echogenicity"],
+        Kinesthetic: ["Practice breath-hold instructions", "Roleplay patient positioning"]
+    },
+    'Ob/Gyn': {
+        Visual: ["Chart the menstrual cycle hormones", "Draw fetal lie and presentation"],
+        Auditory: ["Listen to fetal heart tones", "Discuss biometric measurement techniques"],
+        'Reading/Writing': ["Write a summary of first-trimester milestones", "List indications for transvaginal exams"],
+        Kinesthetic: ["Practice biometric measurements on a phantom", "Simulate transducer orientation for uterus"]
     }
 };
 
@@ -171,7 +176,6 @@ export function generateLessonPlan(user: UserProfile, numProfile: NumerologyProf
     const lsFormat = LEARNING_STYLE_FORMAT[user.learningStyle];
     
     // Select activities based on Subject + Learning Style
-    // In a real app, this would query a database. Here we pick from the mock templates.
     const subjectTemplates = TEMPLATES[subject][user.learningStyle];
     
     return {
