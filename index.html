@@ -43,159 +43,163 @@
       :root {
         --font-sans: 'Inter', sans-serif;
         --font-serif: 'Playfair Display', serif;
-        /* --- STATIC GOLD THEME VARS for Badging --- */
-        --color-gold-rich: #D4AF37;
-        --color-gold-dark: #B8860B;
-        --color-gold-light: #FFD700;
-        --color-gold-glow: rgba(212, 175, 55, 0.3);
       }
       body {
         font-family: var(--font-sans);
         background-color: var(--color-bg-base);
-        background-image: linear-gradient(135deg, var(--color-bg-base) 0%, var(--color-bg-gradient-end) 100%);
+        background-image: linear-gradient(160deg, var(--color-bg-base) 0%, var(--color-bg-gradient-end) 100%);
         color: var(--color-text-base);
-        transition: background 0.5s ease-in-out;
+        transition: background 0.5s ease-in-out, color 0.5s ease-in-out;
         min-height: 100vh;
       }
 
       .font-sans { font-family: var(--font-sans); }
       .font-serif { font-family: var(--font-serif); }
 
-      /* --- THEME DEFINITIONS (REFINED FOR CONTRAST) --- */
-      .theme-gold { /* Celestial Gold */
+      /* --- THEME DEFINITIONS (REFINED) --- */
+      
+      .theme-gold { /* Celestial Gold (Default) */
         --color-primary-accent: #D4AF37;
         --color-primary-accent-dark: #B8860B;
-        --color-primary-accent-light: #FFD700;
-        --color-primary-accent-glow: rgba(212, 175, 55, 0.3);
-        --color-bg-base: #050505;
-        --color-bg-gradient-end: #1c1941;
-        --color-bg-surface: #111113;
-        --color-bg-surface-light: #1e1b2f;
+        --color-primary-accent-light: #FCE68A;
+        --color-primary-accent-glow: rgba(212, 175, 55, 0.4);
+        --color-bg-base: #02040a;
+        --color-bg-gradient-end: #111827;
+        --color-bg-surface: #0f1116;
+        --color-bg-surface-light: #1f2937;
         --color-text-base: #f3f4f6;
-        --color-text-muted: #a1a1aa;
+        --color-text-muted: #9ca3af;
         --color-text-heading: #ffffff;
-        --color-border-base: #3a334f;
-        --color-border-hover: #5a5178;
+        --color-border-base: #27272a;
+        --color-border-hover: #3f3f46;
       }
+
       .theme-cosmic { /* Cosmic Cyan */
-        --color-primary-accent: #07c8e4;
-        --color-primary-accent-dark: #06b6d4;
-        --color-primary-accent-light: #28e0fa;
-        --color-primary-accent-glow: rgba(7, 200, 228, 0.3);
-        --color-bg-base: #020610;
-        --color-bg-gradient-end: #0a2d38;
-        --color-bg-surface: #0c1827;
-        --color-bg-surface-light: #12243b;
-        --color-text-base: #eaf6fe;
+        --color-primary-accent: #06b6d4;
+        --color-primary-accent-dark: #0891b2;
+        --color-primary-accent-light: #67e8f9;
+        --color-primary-accent-glow: rgba(6, 182, 212, 0.4);
+        --color-bg-base: #020617;
+        --color-bg-gradient-end: #0f172a;
+        --color-bg-surface: #0f172a;
+        --color-bg-surface-light: #1e293b;
+        --color-text-base: #e2e8f0;
         --color-text-muted: #94a3b8;
         --color-text-heading: #ffffff;
-        --color-border-base: #1b3a5c;
-        --color-border-hover: #255080;
+        --color-border-base: #1e293b;
+        --color-border-hover: #334155;
       }
+
       .theme-crimson { /* Crimson Ember */
-        --color-primary-accent: #f44336;
-        --color-primary-accent-dark: #e53935;
-        --color-primary-accent-light: #ef5350;
-        --color-primary-accent-glow: rgba(244, 67, 54, 0.35);
-        --color-bg-base: #100202;
-        --color-bg-gradient-end: #3d0909;
-        --color-bg-surface: #1f0d0d;
-        --color-bg-surface-light: #311515;
-        --color-text-base: #fde8e8;
-        --color-text-muted: #b99d9d;
+        --color-primary-accent: #ef4444;
+        --color-primary-accent-dark: #b91c1c;
+        --color-primary-accent-light: #fca5a5;
+        --color-primary-accent-glow: rgba(239, 68, 68, 0.4);
+        --color-bg-base: #180404;
+        --color-bg-gradient-end: #280808;
+        --color-bg-surface: #1f0808;
+        --color-bg-surface-light: #360f0f;
+        --color-text-base: #fee2e2;
+        --color-text-muted: #fca5a5;
         --color-text-heading: #ffffff;
-        --color-border-base: #5c3535;
-        --color-border-hover: #7a4949;
+        --color-border-base: #450a0a;
+        --color-border-hover: #7f1d1d;
       }
+
       .theme-emerald { /* Emerald Serpent */
         --color-primary-accent: #10b981;
-        --color-primary-accent-dark: #059669;
-        --color-primary-accent-light: #34d399;
-        --color-primary-accent-glow: rgba(16, 185, 129, 0.3);
-        --color-bg-base: #031411;
-        --color-bg-gradient-end: #0f3d38;
-        --color-bg-surface: #08221c;
-        --color-bg-surface-light: #0d342c;
-        --color-text-base: #ecfdf5;
-        --color-text-muted: #8bbca8;
+        --color-primary-accent-dark: #047857;
+        --color-primary-accent-light: #6ee7b7;
+        --color-primary-accent-glow: rgba(16, 185, 129, 0.4);
+        --color-bg-base: #022c22;
+        --color-bg-gradient-end: #064e3b;
+        --color-bg-surface: #064e3b;
+        --color-bg-surface-light: #065f46;
+        --color-text-base: #d1fae5;
+        --color-text-muted: #6ee7b7;
         --color-text-heading: #ffffff;
-        --color-border-base: #1e5e54;
-        --color-border-hover: #297c6f;
+        --color-border-base: #065f46;
+        --color-border-hover: #10b981;
       }
+
       .theme-sapphire { /* Sapphire Scribe */
         --color-primary-accent: #3b82f6;
-        --color-primary-accent-dark: #2563eb;
-        --color-primary-accent-light: #60a5fa;
-        --color-primary-accent-glow: rgba(59, 130, 246, 0.3);
-        --color-bg-base: #0a101f;
-        --color-bg-gradient-end: #1a3178;
-        --color-bg-surface: #151e2f;
-        --color-bg-surface-light: #2b364d;
-        --color-text-base: #eef2ff;
-        --color-text-muted: #a0aec0;
+        --color-primary-accent-dark: #1d4ed8;
+        --color-primary-accent-light: #93c5fd;
+        --color-primary-accent-glow: rgba(59, 130, 246, 0.4);
+        --color-bg-base: #0b1120;
+        --color-bg-gradient-end: #1e3a8a;
+        --color-bg-surface: #172554;
+        --color-bg-surface-light: #1e3a8a;
+        --color-text-base: #dbeafe;
+        --color-text-muted: #93c5fd;
         --color-text-heading: #ffffff;
-        --color-border-base: #3e4c66;
-        --color-border-hover: #536382;
+        --color-border-base: #1e3a8a;
+        --color-border-hover: #3b82f6;
       }
+
       .theme-amethyst { /* Amethyst Oracle */
-        --color-primary-accent: #e040fb;
-        --color-primary-accent-dark: #d500f9;
-        --color-primary-accent-light: #ea80fc;
-        --color-primary-accent-glow: rgba(224, 64, 251, 0.35);
-        --color-bg-base: #15062a;
-        --color-bg-gradient-end: #4a1478;
-        --color-bg-surface: #22153c;
-        --color-bg-surface-light: #311d54;
-        --color-text-base: #fbfaff;
-        --color-text-muted: #c9b7e4;
+        --color-primary-accent: #d946ef;
+        --color-primary-accent-dark: #a21caf;
+        --color-primary-accent-light: #f0abfc;
+        --color-primary-accent-glow: rgba(217, 70, 239, 0.4);
+        --color-bg-base: #2e1065;
+        --color-bg-gradient-end: #4c1d95;
+        --color-bg-surface: #4c1d95;
+        --color-bg-surface-light: #5b21b6;
+        --color-text-base: #f3e8ff;
+        --color-text-muted: #d8b4fe;
         --color-text-heading: #ffffff;
-        --color-border-base: #532d80;
-        --color-border-hover: #6a39a9;
+        --color-border-base: #5b21b6;
+        --color-border-hover: #d946ef;
       }
+
       .theme-obsidian { /* Obsidian Shadow */
-        --color-primary-accent: #4fc3f7;
-        --color-primary-accent-dark: #29b6f6;
-        --color-primary-accent-light: #81d4fa;
-        --color-primary-accent-glow: rgba(79, 195, 247, 0.25);
-        --color-bg-base: #01040f;
-        --color-bg-gradient-end: #1a2330;
-        --color-bg-surface: #0c1322;
-        --color-bg-surface-light: #192334;
+        --color-primary-accent: #94a3b8;
+        --color-primary-accent-dark: #64748b;
+        --color-primary-accent-light: #cbd5e1;
+        --color-primary-accent-glow: rgba(148, 163, 184, 0.4);
+        --color-bg-base: #020617;
+        --color-bg-gradient-end: #0f172a;
+        --color-bg-surface: #1e293b;
+        --color-bg-surface-light: #334155;
         --color-text-base: #f1f5f9;
         --color-text-muted: #94a3b8;
         --color-text-heading: #ffffff;
-        --color-border-base: #3c4a60;
-        --color-border-hover: #6e7f99;
+        --color-border-base: #334155;
+        --color-border-hover: #475569;
       }
+
       .theme-sunstone { /* Sunstone Ritual */
-        --color-primary-accent: #fb923c;
-        --color-primary-accent-dark: #f97316;
+        --color-primary-accent: #f97316;
+        --color-primary-accent-dark: #c2410c;
         --color-primary-accent-light: #fdba74;
-        --color-primary-accent-glow: rgba(251, 146, 60, 0.35);
-        --color-bg-base: #281203;
-        --color-bg-gradient-end: #5c200b;
-        --color-bg-surface: #3a1c07;
-        --color-bg-surface-light: #52280d;
-        --color-text-base: #fff7ed;
-        --color-text-muted: #fcd5b4;
+        --color-primary-accent-glow: rgba(249, 115, 22, 0.4);
+        --color-bg-base: #2a1205;
+        --color-bg-gradient-end: #431407;
+        --color-bg-surface: #431407;
+        --color-bg-surface-light: #571c09;
+        --color-text-base: #ffedd5;
+        --color-text-muted: #fdba74;
         --color-text-heading: #ffffff;
-        --color-border-base: #8c4217;
-        --color-border-hover: #a55129;
+        --color-border-base: #571c09;
+        --color-border-hover: #f97316;
       }
-      .theme-upload { /* Operator Console (From Upload) */
-        --color-primary-accent: #F59E0B; /* Amber 500 */
-        --color-primary-accent-dark: #B45309; /* Amber 700 */
-        --color-primary-accent-light: #FCD34D; /* Amber 300 */
-        --color-primary-accent-glow: rgba(245, 158, 11, 0.35);
-        --color-bg-base: #0B0C10; /* Dark almost black */
-        --color-bg-gradient-end: #1F2937; /* Dark gray */
-        --color-bg-surface: #111827; /* Dark Navy */
-        --color-bg-surface-light: #1F2937; /* Gray 800 */
-        --color-text-base: #F3F4F6; /* Gray 100 */
-        --color-text-muted: #9CA3AF; /* Gray 400 */
-        --color-text-heading: #FFFFFF;
-        --color-border-base: #374151; /* Gray 700 */
-        --color-border-hover: #4B5563; /* Gray 600 */
+
+      .theme-upload { /* Operator Console (Refined) */
+        --color-primary-accent: #fbbf24; /* Amber 400 - Clearer Active State */
+        --color-primary-accent-dark: #d97706; /* Amber 600 */
+        --color-primary-accent-light: #fcd34d; /* Amber 300 */
+        --color-primary-accent-glow: rgba(251, 191, 36, 0.3);
+        --color-bg-base: #020617; /* Deepest Slate */
+        --color-bg-gradient-end: #0f172a; /* Slate 900 */
+        --color-bg-surface: #0f172a; /* Slate 900 */
+        --color-bg-surface-light: #1e293b; /* Slate 800 */
+        --color-text-base: #e2e8f0; /* Slate 200 */
+        --color-text-muted: #64748b; /* Slate 500 */
+        --color-text-heading: #f8fafc; /* Slate 50 */
+        --color-border-base: #334155; /* Slate 700 */
+        --color-border-hover: #475569; /* Slate 600 */
       }
 
       /* Base animation */
